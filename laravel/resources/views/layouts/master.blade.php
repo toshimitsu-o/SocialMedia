@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>@yield('title')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   @vite('resources/css/app.css')
 </head>
 <body>
