@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('app');
+    $sql = "select * from Post";
+    $posts = get_posts();
+    return view('app')->with('posts', $posts);
 });
+
+function get_posts() {
+    $sql = "
+    select Post.id, Post.title, User.name as author, Post.message, Post.date
+    from Post, User
+    where Post.author = User.id";
+    $posts = DB::select($sql);
+    return $posts;
+}
