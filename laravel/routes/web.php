@@ -48,9 +48,9 @@ function get_post($id) {
 
 function get_comments($id) {
     $sql = "
-    select *
-    from Comment
-    where postId = ?";
+    select Comment.id, Comment.postId, User.name as author, Comment.message, Comment.date, Comment.replyTo
+    from Comment, User
+    where postId = ? and Comment.author = User.id";
     $comments = DB::select($sql, [$id]);
     return $comments;
 }

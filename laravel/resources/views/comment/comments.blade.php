@@ -7,7 +7,7 @@
 @section('content')
 <main>
     @if ($post)
-        <div class="border max-w-screen-md m-auto bg-white mt-6 rounded-2xl p-4">
+        <div class="border max-w-screen-md bg-white mt-6 rounded-2xl p-4">
             <div class="flex items-center	justify-between">
                 <div class="gap-3.5	flex items-center ">
                     <img src="https://images.unsplash.com/photo-1617077644557-64be144aa306?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" class="object-cover bg-yellow-500 rounded-full w-10 h-10" />
@@ -25,8 +25,8 @@
                     </svg>
                 </div>
             </div>
-            <div class="whitespace-pre-wrap mt-5 italic">&ldquo;{{$post->title}}&rdquo;</div>
-            <div class="whitespace-pre-wrap mt-5">{{$post->message}}</div>
+            <div>{{$post->title}}</div>
+            <div class="whitespace-pre-wrap mt-7">{{$post->message}}</div>
             <div class="mt-5 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
             </div>
                 <div class=" h-16 border-b  flex items-center justify-around	">
@@ -68,11 +68,6 @@
                         </svg>
                         <div class="text-sm">5 Likes</div>
                     </div>
-                </div>
-                <div>
-                    @foreach($comments as $comment)
-                    <p>{{$comment->author}} {{$comment->message}}</p>
-                    @endforeach
                 </div>
                 <div class="flex items-center justify-between mt-4">
                     <img src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
