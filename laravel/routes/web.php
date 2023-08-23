@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\DB;
 
 Route::get('/', function() {
     $posts = get_posts();
-    return view('app')->with('posts', $posts);
+    $uid = session('uid');
+    $uname = session('uname');
+    return view('app')->with('posts', $posts)->with('uname', $uname);
 });
 
 Route::get('post/{id}', function($id) {
@@ -25,11 +27,30 @@ Route::get('post/{id}', function($id) {
     return view('post.post_details')->with('post', $post)->with('comments', $comments);
 });
 
+Route::post('add_post_action', function() {
+    $author = request('author');
+    $title = request('title');
+    $message = request('message');
+
+    $uid = session('uid');
+    if (!$uid) {
+        $uid = add_user($author);
+    }
+    
+    $id = add_post($title, $uid, $message);
+    if ($id) {
+        return redirect(url("/"));
+    } else {
+        die("Error while adding post.");
+    }
+});
+
 function get_posts() {
     $sql = "
     select Post.id, Post.title, User.name as author, Post.message, Post.date
     from Post, User
-    where Post.author = User.id";
+    where Post.author = User.id
+    order by Post.date desc";
     $posts = DB::select($sql);
     return $posts;
 }
@@ -53,4 +74,27 @@ function get_comments($id) {
     where postId = ? and Comment.author = User.id";
     $comments = DB::select($sql, [$id]);
     return $comments;
+}
+
+function add_post($title, $author, $message) {
+    $date = date('Y-m-d h:i:s', time());
+    $sql = "insert into Post (title, author, message, date) values (?, ?, ?, ?)";
+    DB::insert($sql, [$title, $author, $message, $date]);
+    $id = DB::getPdo()->lastInsertId();
+    return $id;
+}
+
+function get_user($id) {
+    $sql = "select name from User where id = ?";
+    $name = DB::select($sql, [$id]);
+    return $name;
+}
+
+function add_user($name) {
+    $sql = "insert into User (name) values (?)";
+    DB::insert($sql, [$name]);
+    $id = DB::getPdo()->lastInsertId();
+    session(['uid' => $id]);
+    session(['uname' => $name]);
+    return $id;
 }

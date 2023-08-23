@@ -2,13 +2,13 @@
     <!-- navbar -->
   <nav class="flex justify-between bg-gray-900 text-white rounded-full">
     <div class="px-5 xl:px-12 py-6 flex w-full items-center">
-      <a class="text-3xl font-bold font-heading" href="#">
+      <a class="text-3xl font-bold font-heading" href="{{url("/")}}">
         <!-- <img class="h-9" src="logo.png" alt="logo"> -->
         Logo Here.
       </a>
       <!-- Nav Links -->
       <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-        <li><a class="hover:text-gray-200" href="#">Home</a></li>
+        <li><a class="hover:text-gray-200" href="{{url("/")}}">Home</a></li>
         <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
         <li><a class="hover:text-gray-200" href="#">Collections</a></li>
         <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>

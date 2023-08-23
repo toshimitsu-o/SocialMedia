@@ -5,9 +5,11 @@ Home
 
 @section('content')
 <main class="h-full w-full m-auto bg-gray-50">
+    @include('post.add_post')
+    
     @if ($posts)
     <div class="max-w-screen-md m-auto">
-            @foreach($posts as $post)
+            @forelse($posts as $post)
             <a href="{{url("post/$post->id")}}">
                 <div class="w-full border bg-white rounded-2xl m-5 p-5">
                     <div class="flex items-center justify-between">
@@ -17,6 +19,7 @@ Home
                                 <b class="mb-2 capitalize">{{$post->author}}</b>
                             </div>
                         </div>
+                        <div class="italic">{{$post->date}}</div>
                     </div>
                     <div class="whitespace-pre-wrap mt-5">{{$post->title}}</div>
                 </div>

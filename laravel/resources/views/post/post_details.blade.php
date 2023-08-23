@@ -70,9 +70,11 @@
                     </div>
                 </div>
                 <div>
-                    @foreach($comments as $comment)
-                    <p>{{$comment->author}} {{$comment->message}}</p>
-                    @endforeach
+                    @forelse($comments as $comment)
+                    <p>{{$comment->author}}: {{$comment->message}} {{$comment->date}}</p>
+                    @empty
+                    <p>No comments.</p>
+                    @endforelse
                 </div>
                 <div class="flex items-center justify-between mt-4">
                     <img src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
