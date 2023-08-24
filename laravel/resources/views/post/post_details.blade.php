@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+<style>
+    #sortbox:checked ~ #sortboxmenu {
+        opacity: 1;
+    }
+</style>
 <main>
     @if ($post)
         <div class="border max-w-screen-md m-auto bg-white mt-6 rounded-2xl p-4">
@@ -17,13 +22,52 @@
                         </time>
                     </div>
                 </div>
-                <div class="bg-gray-100	rounded-full h-3.5 flex	items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path
-                            d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                    </svg>
+                <!-- tool menu -->
+                <div class="relative">
+                    <input type="checkbox" id="sortbox" class="hidden absolute">
+                    <label for="sortbox" class="flex items-center space-x-1 cursor-pointer">
+                        <div class="bg-gray-100	rounded-full w-9 h-9 flex	items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path
+                                d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                        </svg>
+                    </div>
+                    </label>
+                
+                        <div for="sortbox" id="sortboxmenu" class="absolute mt-1 right-1 top-full min-w-max rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 transition ease-in-out z-10">
+                        <ul class="block p-2 text-right text-gray-900">
+                            <li><a href="#" class="flex items-start rounded-lg p-3 hover:bg-gray-50" onclick="my_modal_1.showModal()">Edit</a></li>
+                            <li><a href="{{url("delete_post/$post->id")}}" class="flex items-start rounded-lg p-3 hover:bg-gray-50">Delete</a></li>
+                        </ul>
+                    </div>
                 </div>
+                <!-- tool menu -->
+
+
+<dialog id="my_modal_1" class="rounded-lg bg-white text-left shadow-xl p-5">
+    <h3 class="font-bold text-lg">Edit Post</h3>
+    <form method="post" action="{{url("edit_post_action")}}">
+        @csrf
+        <input type="hidden" name="id" value="{{$post->id}}">
+        <div class="max-w-screen-md m-auto flex items-center justify-between mt-4">
+        <div class="flex items-center justify-between bg-gray-50 h-11 w-11/12 border rounded-2xl overflow-hidden px-4">
+            <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Title" name="title" value="{{$post->title}}">
+        </div>
+        <div class="flex items-center justify-between bg-gray-50 h-11 w-11/12 border rounded-2xl overflow-hidden px-4">
+            <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Message" name="message" value="{{$post->message}}">
+        </div>
+        <input type="submit" value="Edit">
+    </div>
+    </form>
+    <div class="modal-action">
+      <!-- if there is a button in form, it will close the modal -->
+      <form method="dialog" class="modal-box">
+      <button class="btn">Close</button>
+    </form>
+    </div>
+</dialog>
+
             </div>
             <div class="whitespace-pre-wrap mt-5 italic">&ldquo;{{$post->title}}&rdquo;</div>
             <div class="whitespace-pre-wrap mt-5">{{$post->message}}</div>
@@ -76,12 +120,7 @@
                     <p>No comments.</p>
                     @endforelse
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                    <img src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"  class="bg-yellow-500 rounded-full w-10 h-10 object-cover border">
-                    <div class="flex items-center	justify-between	 bg-gray-50 h-11 w-11/12 border rounded-2xl	 overflow-hidden px-4 ">
-                        <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Write your comment..." name="comment">
-                    </div>
-                </div>
+                @include('comment.add_comment')
         </div>
     @else
         <p>Post Not Found.</p>

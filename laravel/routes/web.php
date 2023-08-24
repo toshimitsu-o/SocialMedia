@@ -24,7 +24,8 @@ Route::get('/', function() {
 Route::get('post/{id}', function($id) {
     $post = get_post($id);
     $comments = get_comments($id);
-    return view('post.post_details')->with('post', $post)->with('comments', $comments);
+    $uname = session('uname');
+    return view('post.post_details')->with('post', $post)->with('comments', $comments)->with('uname', $uname);
 });
 
 Route::post('add_post_action', function() {
@@ -32,10 +33,7 @@ Route::post('add_post_action', function() {
     $title = request('title');
     $message = request('message');
 
-    $uid = session('uid');
-    if (!$uid) {
-        $uid = add_user($author);
-    }
+    $uid = handleUser($author);
     
     $id = add_post($title, $uid, $message);
     if ($id) {
@@ -44,6 +42,38 @@ Route::post('add_post_action', function() {
         die("Error while adding post.");
     }
 });
+
+Route::post('edit_post_action', function() {
+    $title = request('title');
+    $message = request('message');
+    $id = request('id');
+
+    edit_post($id, $title, $message);
+    return redirect(url("post/$id"));
+});
+
+Route::get('delete_post/{id}', function($id) {
+    delete_post($id);
+    return redirect(url("/"));
+});
+
+Route::post('add_comment_action', function() {
+    $postId = request('postId');
+    $author = request('author');
+    $message = request('message');
+
+    $uid = handleUser($author);
+    add_comment($postId, $uid, $message);
+    return redirect(url("post/$postId"));
+});
+
+function handleUser($name) {
+    $uid = session('uid');
+    if (!$uid) {
+        $uid = add_user($name);
+    }
+    return $uid;
+}
 
 function get_posts() {
     $sql = "
@@ -76,12 +106,35 @@ function get_comments($id) {
     return $comments;
 }
 
+function add_comment($postId, $author, $message) {
+    $date = date('Y-m-d h:i:s', time());
+    $sql = "insert into Comment (postId, author, message, date) values (?, ?, ?, ?)";
+    DB::insert($sql, [$postId, $author, $message, $date]);
+    $id = DB::getPdo()->lastInsertId();
+    return $id;
+}
+
 function add_post($title, $author, $message) {
     $date = date('Y-m-d h:i:s', time());
     $sql = "insert into Post (title, author, message, date) values (?, ?, ?, ?)";
     DB::insert($sql, [$title, $author, $message, $date]);
     $id = DB::getPdo()->lastInsertId();
     return $id;
+}
+
+function edit_post($id, $title, $message) {
+    $date = date('Y-m-d h:i:s', time());
+    $sql = "update Post set title = ?, message = ?, date = ? where id = ?";
+    DB::update($sql, [$title, $message, $date, $id]);
+}
+
+function delete_post($id) {
+    $sql = "delete from Like where postId = ?";
+    DB::delete($sql, [$id]);
+    $sql = "delete from Comment where postId = ?";
+    DB::delete($sql, [$id]);
+    $sql = "delete from Post where id = ?";
+    DB::delete($sql, [$id]);
 }
 
 function get_user($id) {
