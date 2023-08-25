@@ -18,6 +18,7 @@ Route::get('/', function() {
     $posts = get_posts();
     $uid = session('uid');
     $uname = session('uname');
+
     return view('app')->with('posts', $posts)->with('uname', $uname);
 });
 
@@ -33,7 +34,12 @@ Route::post('add_post_action', function() {
     $title = request('title');
     $message = request('message');
 
-    $uid = handleUser($author);
+    $errors = validate_post($title, $author, $message);
+    if ($errors) {
+        return back()->with('errors', $errors);
+    }
+
+    $uid = handle_user($author);
     
     $id = add_post($title, $uid, $message);
     if ($id) {
@@ -62,18 +68,64 @@ Route::post('add_comment_action', function() {
     $author = request('author');
     $message = request('message');
 
-    $uid = handleUser($author);
+    $uid = handle_user($author);
     add_comment($postId, $uid, $message);
     return redirect(url("post/$postId"));
 });
 
-function handleUser($name) {
+/*
+|--------------------------------------------------------------------------
+| Functions
+|--------------------------------------------------------------------------
+*/
+
+/* Input Validation */
+
+function validate_post($title, $author, $message) {
+    $errors = array();
+
+    if (strlen($title) < 3) {
+        $errors[] = "Title must have at least 3 characters.";
+    }
+    if (strlen($author) < 1) {
+        $errors[] = "Author must not be empty.";
+    }
+    if (preg_match('~[0-9]+~', $author)) {
+        $errors[] = "Author must not have numeric characters.";
+    }
+    if (str_word_count($message, 0) < 5) {
+        $errors[] = "Message must have at least 5 words.";
+    }
+
+    return $errors;
+}
+
+/* User */
+
+function handle_user($name) {
     $uid = session('uid');
     if (!$uid) {
         $uid = add_user($name);
     }
     return $uid;
 }
+
+function get_user($id) {
+    $sql = "select name from User where id = ?";
+    $name = DB::select($sql, [$id]);
+    return $name;
+}
+
+function add_user($name) {
+    $sql = "insert into User (name) values (?)";
+    DB::insert($sql, [$name]);
+    $id = DB::getPdo()->lastInsertId();
+    session(['uid' => $id]);
+    session(['uname' => $name]);
+    return $id;
+}
+
+/* Post */
 
 function get_posts() {
     $sql = "
@@ -95,23 +147,6 @@ function get_post($id) {
         die("Something has gone wrong, invalid query or result: $sql");
     }
     return $posts[0];
-}
-
-function get_comments($id) {
-    $sql = "
-    select Comment.id, Comment.postId, User.name as author, Comment.message, Comment.date, Comment.replyTo
-    from Comment, User
-    where postId = ? and Comment.author = User.id";
-    $comments = DB::select($sql, [$id]);
-    return $comments;
-}
-
-function add_comment($postId, $author, $message) {
-    $date = date('Y-m-d h:i:s', time());
-    $sql = "insert into Comment (postId, author, message, date) values (?, ?, ?, ?)";
-    DB::insert($sql, [$postId, $author, $message, $date]);
-    $id = DB::getPdo()->lastInsertId();
-    return $id;
 }
 
 function add_post($title, $author, $message) {
@@ -137,17 +172,22 @@ function delete_post($id) {
     DB::delete($sql, [$id]);
 }
 
-function get_user($id) {
-    $sql = "select name from User where id = ?";
-    $name = DB::select($sql, [$id]);
-    return $name;
+/* Comment */
+
+function get_comments($id) {
+    $sql = "
+    select Comment.id, Comment.postId, User.name as author, Comment.message, Comment.date, Comment.replyTo
+    from Comment, User
+    where postId = ? and Comment.author = User.id";
+    $comments = DB::select($sql, [$id]);
+    return $comments;
 }
 
-function add_user($name) {
-    $sql = "insert into User (name) values (?)";
-    DB::insert($sql, [$name]);
+function add_comment($postId, $author, $message) {
+    $date = date('Y-m-d h:i:s', time());
+    $sql = "insert into Comment (postId, author, message, date) values (?, ?, ?, ?)";
+    DB::insert($sql, [$postId, $author, $message, $date]);
     $id = DB::getPdo()->lastInsertId();
-    session(['uid' => $id]);
-    session(['uname' => $name]);
     return $id;
 }
+

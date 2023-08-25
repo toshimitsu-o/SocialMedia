@@ -74,33 +74,11 @@
             <div class="mt-5 flex gap-2	 justify-center border-b pb-4 flex-wrap	">
             </div>
                 <div class=" h-16 border-b  flex items-center justify-around	">
-                    <div class="flex items-center	gap-3	">
-                        <svg width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <g id="?-Social-Media" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="Square_Timeline" transform="translate(-312.000000, -746.000000)">
-                                    <g id="Post-1" transform="translate(280.000000, 227.000000)">
-                                        <g id="Post-Action" transform="translate(0.000000, 495.000000)">
-                                            <g transform="translate(30.000000, 21.000000)" id="Comment">
-                                                <g>
-                                                    <g id="ic_comment-Component/icon/ic_comment">
-                                                        <g id="Comments">
-                                                            <polygon id="Path" points="0 0 24 0 24 25 0 25"></polygon>
-                                                            <g id="iconspace_Chat-3_25px"
-                                                                transform="translate(2.000000, 3.000000)" fill="#92929D">
-                                                                <path
-                                                                    d="M10.5139395,15.2840977 L6.06545155,18.6848361 C5.05870104,19.4544672 3.61004168,18.735539 3.60795568,17.4701239 L3.60413773,15.1540669 C1.53288019,14.6559967 0,12.7858138 0,10.5640427 L0,4.72005508 C0,2.11409332 2.10603901,0 4.70588235,0 L15.2941176,0 C17.893961,0 20,2.11409332 20,4.72005508 L20,10.5640427 C20,13.1700044 17.893961,15.2840977 15.2941176,15.2840977 L10.5139395,15.2840977 Z M5.60638935,16.5183044 L9.56815664,13.4896497 C9.74255213,13.3563295 9.955971,13.2840977 10.1754888,13.2840977 L15.2941176,13.2840977 C16.7876789,13.2840977 18,12.0671403 18,10.5640427 L18,4.72005508 C18,3.21695746 16.7876789,2 15.2941176,2 L4.70588235,2 C3.21232108,2 2,3.21695746 2,4.72005508 L2,10.5640427 C2,12.0388485 3.1690612,13.2429664 4.6301335,13.28306 C5.17089106,13.297899 5.60180952,13.7400748 5.60270128,14.2810352 L5.60638935,16.5183044 Z"
-                                                                    id="Path"></path>
-                                                            </g>
-                                                        </g>
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
+                    <div class="flex items-center gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
+                          </svg>
+                          
                         <div class="text-sm	">{{count($comments)}} Comments</div>
                     </div>
                     <div class="flex items-center	gap-3">
