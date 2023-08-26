@@ -9,9 +9,7 @@
       <!-- Nav Links -->
       <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
         <li><a class="hover:text-gray-200" href="{{url("/")}}">Home</a></li>
-        <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
-        <li><a class="hover:text-gray-200" href="#">Collections</a></li>
-        <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
+        <li><a class="hover:text-gray-200" href="{{url("users")}}">Users</a></li>
       </ul>
       <!-- Header Icons -->
       <div class="hidden xl:flex items-center space-x-5">

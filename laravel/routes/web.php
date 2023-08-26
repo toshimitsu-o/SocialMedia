@@ -29,6 +29,11 @@ Route::get('post/{id}', function($id) {
     return view('post.post_details')->with('post', $post)->with('comments', $comments)->with('uname', $uname);
 });
 
+Route::get('users', function() {
+    $users = get_users();
+    return view('user_list')->with('users', $users);
+});
+
 Route::post('add_post_action', function() {
     $author = request('author');
     $title = request('title');
@@ -108,6 +113,12 @@ function handle_user($name) {
         $uid = add_user($name);
     }
     return $uid;
+}
+
+function get_users() {
+    $sql = "select * from User";
+    $users = DB::select($sql);
+    return $users;
 }
 
 function get_user($id) {
