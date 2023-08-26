@@ -129,9 +129,11 @@ function add_user($name) {
 
 function get_posts() {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date
-    from Post, User
-    where Post.author = User.id
+    select Post.id, Post.title, User.name as author, Post.message, Post.date, count(Comment.id) as commentsCount
+    from Post
+    left join User on Post.id = User.id
+    left join Comment on Post.id = Comment.postId
+    group by Post.id
     order by Post.date desc";
     $posts = DB::select($sql);
     return $posts;
