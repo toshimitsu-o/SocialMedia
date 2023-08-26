@@ -34,6 +34,12 @@ Route::get('users', function() {
     return view('user_list')->with('users', $users);
 });
 
+Route::get('user/{id}', function($id) {
+    $user = get_user($id)[0];
+    $posts = get_posts_by_user($id);
+    return view('posts_by_user')->with('user', $user)->with('posts', $posts);
+});
+
 Route::post('add_post_action', function() {
     $author = request('author');
     $title = request('title');
@@ -147,6 +153,19 @@ function get_posts() {
     group by Post.id
     order by Post.date desc";
     $posts = DB::select($sql);
+    return $posts;
+}
+
+function get_posts_by_user($id) {
+    $sql = "
+    select Post.id, Post.title, User.name as author, Post.message, Post.date, count(Comment.id) as commentsCount
+    from Post
+    left join User on Post.id = User.id
+    left join Comment on Post.id = Comment.postId
+    where Post.author = ?
+    group by Post.id
+    order by Post.date desc";
+    $posts = DB::select($sql, [$id]);
     return $posts;
 }
 
