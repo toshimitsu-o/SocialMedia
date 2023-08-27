@@ -26,7 +26,9 @@ Route::get('post/{id}', function($id) {
     $post = get_post($id);
     $comments = get_comments($id);
     $uname = session('uname');
-    return view('post.post_details')->with('post', $post)->with('comments', $comments)->with('uname', $uname);
+    $uid = session('uid');
+    $like = check_like($id, $uid);
+    return view('post.post_details')->with('post', $post)->with('comments', $comments)->with('uname', $uname)->with('uid', $uid)->with('like', $like);
 });
 
 Route::get('users', function() {
@@ -38,6 +40,12 @@ Route::get('user/{id}', function($id) {
     $user = get_user($id)[0];
     $posts = get_posts_by_user($id);
     return view('posts_by_user')->with('user', $user)->with('posts', $posts);
+});
+
+Route::get('like/{id}', function($id) {
+    $post = get_post($id);
+    $uname = session('uname');
+    return view('like.like_new_user')->with('post', $post)->with('uname', $uname);
 });
 
 Route::post('add_post_action', function() {
@@ -80,7 +88,26 @@ Route::post('add_comment_action', function() {
     $message = request('message');
 
     $uid = handle_user($author);
-    add_comment($postId, $uid, $message);
+    $id = add_comment($postId, $uid, $message);
+
+    if ($id) {
+        return redirect(url("post/$postId"));
+    } else {
+        die("Error while adding a like.");
+    }
+});
+
+Route::post('like_action', function() {
+    $postId = request('postId');
+    $author = request('author');
+    $uid = session('uid');
+    if ($author) {
+        $uid = handle_user($author);
+    } else if (!$uid) {
+        return redirect(url("like/$postId"));
+    }
+
+    set_like($postId, $uid);
     return redirect(url("post/$postId"));
 });
 
@@ -231,3 +258,33 @@ function add_comment($postId, $author, $message) {
     return $id;
 }
 
+/* Like */
+
+function set_like($postId, $user) {
+    $sql = "select * from Like where postId = ? and user = ?";
+    $likes = DB::select($sql, [$postId, $user]);
+    if (count($likes) > 1) {
+        die("Something has gone wrong, invalid query or result: $sql");
+    } else if (count($likes) == 1) {
+        $sql = "delete from Like where postId = ? and user = ?";
+        DB::delete($sql, [$postId, $user]);
+    } else {
+        $sql = "insert into Like (postId, user) values (?, ?)";
+        DB::insert($sql, [$postId, $user]);
+    }
+}
+
+function check_like($postId, $user) {
+    if ($user == null) {
+        return false;
+    }
+    $sql = "select * from Like where postId = ? and user = ?";
+    $likes = DB::select($sql, [$postId, $user]);
+    if (count($likes) > 1) {
+        die("Something has gone wrong, invalid query or result: $sql");
+    } else if (count($likes) == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
