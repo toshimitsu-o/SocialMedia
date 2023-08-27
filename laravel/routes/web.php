@@ -122,7 +122,13 @@ function handle_user($name) {
 }
 
 function get_users() {
-    $sql = "select * from User";
+    $sql = "
+    select User.id, User.name, count(Post.author) as postCount
+    from User
+    left join Post on User.id = Post.author
+    group by User.id
+    having count(Post.author) > 0
+    ";
     $users = DB::select($sql);
     return $users;
 }
