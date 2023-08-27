@@ -125,9 +125,8 @@ function get_users() {
     $sql = "
     select User.id, User.name, count(Post.author) as postCount
     from User
-    left join Post on User.id = Post.author
+    inner join Post on User.id = Post.author
     group by User.id
-    having count(Post.author) > 0
     ";
     $users = DB::select($sql);
     return $users;
@@ -152,11 +151,11 @@ function add_user($name) {
 
 function get_posts() {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date, count(Comment.id) as commentsCount
+    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
+    (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
-    left join User on Post.author = User.id
-    left join Comment on Post.id = Comment.postId
-    group by Post.id
+    inner join User on Post.author = User.id
     order by Post.date desc";
     $posts = DB::select($sql);
     return $posts;
@@ -164,12 +163,12 @@ function get_posts() {
 
 function get_posts_by_user($id) {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date, count(Comment.id) as commentsCount
+    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
+    (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
-    left join User on Post.author = User.id
-    left join Comment on Post.id = Comment.postId
+    inner join User on Post.author = User.id
     where Post.author = ?
-    group by Post.id
     order by Post.date desc";
     $posts = DB::select($sql, [$id]);
     return $posts;
@@ -177,9 +176,12 @@ function get_posts_by_user($id) {
 
 function get_post($id) {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date
-    from Post, User
-    where Post.id = ? and Post.author = User.id";
+    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
+    (select count(*) from Like where Like.postId = Post.id) as likesCount
+    from Post
+    inner join User on Post.author = User.id
+    where Post.id = ?";
     $posts = DB::select($sql, [$id]);
     if (count($posts) != 1) {
         die("Something has gone wrong, invalid query or result: $sql");
