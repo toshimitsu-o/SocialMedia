@@ -5,11 +5,7 @@
 @endsection
 
 @section('content')
-<style>
-    #sortbox:checked ~ #sortboxmenu {
-        opacity: 1;
-    }
-</style>
+
 <main>
     @if ($post)
         <div class="border max-w-screen-md m-auto bg-white mt-6 rounded-2xl p-4">
@@ -23,9 +19,14 @@
                     </div>
                 </div>
                 <!-- tool menu -->
+                <style>
+                    #toolmenu:checked ~ #toolmenumenu {
+                        opacity: 1;
+                    }
+                </style>
                 <div class="relative">
-                    <input type="checkbox" id="sortbox" class="hidden absolute">
-                    <label for="sortbox" class="flex items-center space-x-1 cursor-pointer">
+                    <input type="checkbox" id="toolmenu" class="hidden absolute">
+                    <label for="toolmenu" class="flex items-center space-x-1 cursor-pointer">
                         <div class="bg-gray-100	rounded-full w-9 h-9 flex	items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="34px" fill="#92929D">
                             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -35,7 +36,7 @@
                     </div>
                     </label>
                 
-                        <div for="sortbox" id="sortboxmenu" class="absolute mt-1 right-1 top-full min-w-max rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 transition ease-in-out z-10">
+                        <div for="toolmenu" id="toolmenumenu" class="absolute mt-1 right-1 top-full min-w-max rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 transition ease-in-out z-10">
                         <ul class="block p-2 text-right text-gray-900">
                             <li><a href="#" class="flex items-start rounded-lg p-3 hover:bg-gray-50" onclick="my_modal_1.showModal()">Edit</a></li>
                             <li><a href="{{url("delete_post/$post->id")}}" class="flex items-start rounded-lg p-3 hover:bg-gray-50">Delete</a></li>
