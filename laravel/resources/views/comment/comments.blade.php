@@ -3,12 +3,12 @@
     <div class="flex flex-row">
         <div>{{$comment->author}}: {{$comment->message}} {{$comment->date}}</div>
         <div>
-            <x-add_reply postId="{{$comment->postId}}" replyTo="{{$comment->id}}" :$uname />
+            @include('comment.add_reply', ['postId' => $comment->postId, 'replyTo' => $comment->id])
         </div>
     </div>
-    <x-list_reply :replies="$comment->replies" :$uname />
+    @include('comment.list_reply', ['replies' => $comment->replies])
     @empty
     <p>No comments.</p>
     @endforelse
 </div>
-<x-add_reply postId="{{$post->id}}" replyTo="" :$uname />
+@include('comment.add_reply', ['postId' => $post->id, 'replyTo' => ''])
