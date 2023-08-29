@@ -28,6 +28,7 @@ Route::get('post/{id}', function($id) {
     $uname = session('uname');
     $uid = session('uid');
     $like = check_like($id, $uid);
+    //dd($comments);
     return view('post.post_details')->with('post', $post)->with('comments', $comments)->with('uname', $uname)->with('uid', $uid)->with('like', $like);
 });
 
@@ -86,9 +87,10 @@ Route::post('add_comment_action', function() {
     $postId = request('postId');
     $author = request('author');
     $message = request('message');
+    $replyTo = request('replyTo');
 
     $uid = handle_user($author);
-    $id = add_comment($postId, $uid, $message);
+    $id = add_comment($postId, $uid, $message, $replyTo);
 
     if ($id) {
         return redirect(url("post/$postId"));
@@ -245,15 +247,37 @@ function get_comments($id) {
     $sql = "
     select Comment.id, Comment.postId, User.name as author, Comment.message, Comment.date, Comment.replyTo
     from Comment, User
-    where postId = ? and Comment.author = User.id";
+    where postId = ? and Comment.author = User.id
+    order by Comment.date";
     $comments = DB::select($sql, [$id]);
-    return $comments;
+    return handle_comments($comments);
 }
 
-function add_comment($postId, $author, $message) {
+function handle_comments($comments) {
+    $newComments = array();
+    $handledComments = array();
+    foreach ($comments as $c) {
+        
+            $c->replies = array();
+
+            foreach ($comments as $d) {
+                if ($d->replyTo == $c->id and !in_array($d, $handledComments)) {
+                    array_push($c->replies, $d);
+                    array_push($handledComments, $d);
+                }
+            }
+        if (!$c->replyTo) {
+            array_push($newComments, $c);
+            array_push($handledComments, $c);
+        } 
+    }
+    return $newComments;
+}
+
+function add_comment($postId, $author, $message, $replyTo) {
     $date = date('Y-m-d h:i:s', time());
-    $sql = "insert into Comment (postId, author, message, date) values (?, ?, ?, ?)";
-    DB::insert($sql, [$postId, $author, $message, $date]);
+    $sql = "insert into Comment (postId, author, message, date, replyTo) values (?, ?, ?, ?, ?)";
+    DB::insert($sql, [$postId, $author, $message, $date, $replyTo]);
     $id = DB::getPdo()->lastInsertId();
     return $id;
 }
