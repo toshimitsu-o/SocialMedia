@@ -1,13 +1,13 @@
 <div>
-    <details class="group flex flex-row items-end m-2 open:bg-gray-100 duration-300 rounded-xl">
-        <summary class="bg-inherit px-5 py-3 cursor-pointer list-none">
+    <details class="group m-2 flex flex-row items-end rounded-xl duration-300 open:bg-gray-100">
+        <summary class="cursor-pointer list-none bg-inherit px-5 py-3">
             <div class="flex flex-row items-center">
-                <div class="flex flex-col grow gap-3">
+                <div class="flex grow flex-col gap-3">
                     <div>{{ $reply->author }} <span class="pl-4 text-xs font-light">{{ $reply->date }}</span></div>
                     <div>{{ $reply->message }}</div>
                 </div>
-                <div class="opacity-40 group-hover:opacity-100 flex flex-row gap-3">
-                    <div class="bg-gray-100	rounded-full w-9 h-9 flex items-center justify-center">
+                <div class="flex flex-row gap-3 opacity-40 group-hover:opacity-100">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-reply" viewBox="0 0 16 16">
                             <path

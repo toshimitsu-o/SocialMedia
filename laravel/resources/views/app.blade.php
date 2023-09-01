@@ -4,18 +4,18 @@
 @endsection
 
 @section('content')
-    <main class="h-full w-full m-auto bg-gray-50">
+    <main class="m-auto h-full w-full bg-gray-50">
         @include('post.add_post')
         @include('post.post_list')
     </main>
     <!-- Open the modal using ID.showModal() method -->
 
     <button type="button"
-        class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+        class="ease focus:shadow-outline m-2 select-none rounded-md border border-indigo-500 bg-indigo-500 px-4 py-2 text-white transition duration-500 hover:bg-indigo-600 focus:outline-none"
         onclick="my_modal_1.showModal()">open modal</button>
-    <dialog id="my_modal_1" class="rounded-lg bg-white text-left shadow-xl p-5">
+    <dialog id="my_modal_1" class="rounded-lg bg-white p-5 text-left shadow-xl">
         <form method="dialog" class="modal-box">
-            <h3 class="font-bold text-lg">Hello!</h3>
+            <h3 class="text-lg font-bold">Hello!</h3>
             <p class="py-4">Press ESC key or click the button below to close</p>
             <div class="modal-action">
                 <!-- if there is a button in form, it will close the modal -->
