@@ -4,10 +4,8 @@
 @endsection
 
 @section('content')
-    <main class="m-auto h-full w-full bg-gray-50">
-        @include('post.add_post')
-        @include('post.post_list')
-    </main>
+    @include('post.add_post')
+    @include('post.post_list')
     <!-- Open the modal using ID.showModal() method -->
 
     <button type="button"

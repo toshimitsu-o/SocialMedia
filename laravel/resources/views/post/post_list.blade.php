@@ -1,20 +1,26 @@
 @if (count($posts) > 0)
-    <div class="m-auto max-w-screen-md">
-        <p>{{ count($posts) }} posts</p>
-        @forelse($posts as $post)
-            <a href="{{ url("post/$post->id") }}">
-                <div class="m-5 w-full rounded-2xl border bg-white p-5">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3.5">
-                            <img src="https://images.unsplash.com/photo-1617077644557-64be144aa306?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-                                class="h-10 w-10 rounded-full bg-yellow-500 object-cover" />
-                            <div class="flex flex-col">
-                                <b class="mb-2 capitalize">{{ $post->author }}</b>
-                            </div>
-                        </div>
-                        <div class="italic">{{ $post->date }}</div>
+    <p>{{ count($posts) }} posts</p>
+    @forelse($posts as $post)
+        <a href="{{ url("post/$post->id") }}">
+            <div class="my-5 w-full rounded-2xl border bg-white bg-opacity-70 p-5">
+                <div class="flex items-center gap-3.5">
+                    <div class="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600">
+                        <svg class="absolute -left-1 h-12 w-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clip-rule="evenodd">
+                            </path>
+                        </svg>
                     </div>
-                    <div class="mt-5 whitespace-pre-wrap">{{ $post->title }}</div>
+                    <div class="flex flex-col">
+                        <b class="mb-2 capitalize">{{ $post->author }}</b>
+                        <time datetime="06-08-21" class="text-xs text-gray-400">{{ $post->date }}
+                        </time>
+                    </div>
+                </div>
+                <div class="mt-5 whitespace-pre-wrap">{{ $post->title }}</div>
+
+                <div class="flex items-center justify-around">
                     <!-- Comments -->
                     <div class="flex items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -35,11 +41,10 @@
                         <div class="text-sm">{{ $post->likesCount }} Likes</div>
                     </div>
                     <!-- Likes -->
-
                 </div>
-            </a>
-        @endforeach
-    </div>
+            </div>
+        </a>
+    @endforeach
 @else
     <p>No items.</p>
 @endif
