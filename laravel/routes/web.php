@@ -38,9 +38,20 @@ Route::get('users', function() {
 });
 
 Route::get('user/{id}', function($id) {
-    $user = get_user($id)[0];
+    $user = get_user($id);
     $posts = get_posts_by_user($id);
     return view('posts_by_user')->with('user', $user)->with('posts', $posts);
+});
+
+Route::get('userprofile', function() {
+    $uid = session('uid');
+    $uname = session('uname');
+    return view('user_profile')->with('uname', $uname)->with('uid', $uid);
+});
+
+Route::get('logout', function() {
+    session()->flush();
+    return back();
 });
 
 Route::get('like/{id}', function($id) {
@@ -163,24 +174,41 @@ function get_users() {
 
 function get_user($id) {
     $sql = "select name from User where id = ?";
-    $name = DB::select($sql, [$id]);
-    return $name;
+    $names = DB::select($sql, [$id]);
+    return $names[0];
+}
+
+function find_user($name) {
+    $sql = "select id from User where name = ?";
+    $ids = DB::select($sql, [$name]);
+    if (empty($ids)) {
+        return null;
+    }
+    return $ids[0]->id;
 }
 
 function add_user($name) {
-    $sql = "insert into User (name) values (?)";
+    $sql = "insert or ignore into User (name) values (?)";
     DB::insert($sql, [$name]);
-    $id = DB::getPdo()->lastInsertId();
+    //$id = DB::getPdo()->lastInsertId();
+    $id = find_user($name);
     session(['uid' => $id]);
     session(['uname' => $name]);
     return $id;
+}
+
+function get_user_icon($id) {
+    if ($id < 15) {
+        return "";
+    }
+
 }
 
 /* Post */
 
 function get_posts() {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -192,7 +220,7 @@ function get_posts() {
 
 function get_posts_by_user($id) {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -205,7 +233,7 @@ function get_posts_by_user($id) {
 
 function get_post($id) {
     $sql = "
-    select Post.id, Post.title, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -245,7 +273,7 @@ function delete_post($id) {
 
 function get_comments($id) {
     $sql = "
-    select Comment.id, Comment.postId, User.name as author, Comment.message, Comment.date, Comment.replyTo
+    select Comment.id, Comment.postId, Comment.author as authorId, User.name as author, Comment.message, Comment.date, Comment.replyTo
     from Comment, User
     where postId = ? and Comment.author = User.id
     order by Comment.date";

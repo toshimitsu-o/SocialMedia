@@ -1,7 +1,8 @@
 <div>
     <details class="group m-2 flex flex-row items-end rounded-xl duration-300 open:bg-gray-100">
         <summary class="cursor-pointer list-none bg-inherit px-5 py-3">
-            <div class="flex flex-row items-center">
+            <div class="flex flex-row items-start gap-2">
+                @include('user.user_icon', ['userId' => $reply->authorId])
                 <div class="flex grow flex-col gap-3">
                     <div>{{ $reply->author }} <span class="pl-4 text-xs font-light">{{ $reply->date }}</span></div>
                     <div>{{ $reply->message }}</div>
