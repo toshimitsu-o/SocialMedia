@@ -19,9 +19,6 @@
                     @endforeach
                 </div>
             @endif
-            @if (!empty($title))
-                <p>{{$title}}</p>
-            @endif
             <form method="post" action="{{ url('add_post_action') }}">
                 @csrf
                 <div class="m-auto mt-4 flex max-w-screen-md flex-col items-center justify-between gap-2">

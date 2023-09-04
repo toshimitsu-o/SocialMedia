@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Item list
+    Post
 @endsection
 
 @section('content')
@@ -38,42 +38,25 @@
                     <div for="toolmenu" id="toolmenumenu"
                         class="absolute right-1 top-full mt-1 min-w-max rounded-lg bg-white opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition ease-in-out">
                         <ul class="block p-2 text-right text-gray-900">
-                            <li><a href="#" class="flex items-start rounded-lg p-3 hover:bg-gray-50"
-                                    onclick="my_modal_1.showModal()">Edit</a></li>
+                            <li><label class="flex cursor-pointer items-start gap-2 rounded-lg p-3 hover:bg-gray-50"
+                                    for="modal-toggle"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                    </svg>
+                                    <span>Edit</span></label></li>
                             <li><a href="{{ url("delete_post/$post->id") }}"
-                                    class="flex items-start rounded-lg p-3 hover:bg-gray-50">Delete</a></li>
+                                    class="flex items-start gap-2 rounded-lg p-3 hover:bg-gray-50"><svg
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                    <span>Delete</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- tool menu -->
-
-
-                <dialog id="my_modal_1" class="rounded-lg bg-white p-5 text-left shadow-xl">
-                    <h3 class="text-lg font-bold">Edit Post</h3>
-                    <form method="post" action="{{ url('edit_post_action') }}">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $post->id }}">
-                        <div class="m-auto mt-4 flex max-w-screen-md items-center justify-between">
-                            <div
-                                class="flex h-11 w-11/12 items-center justify-between overflow-hidden rounded-2xl border bg-gray-50 px-4">
-                                <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Title"
-                                    name="title" value="{{ $post->title }}">
-                            </div>
-                            <div
-                                class="flex h-11 w-11/12 items-center justify-between overflow-hidden rounded-2xl border bg-gray-50 px-4">
-                                <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Message"
-                                    name="message" value="{{ $post->message }}">
-                            </div>
-                            <input type="submit" value="Edit">
-                        </div>
-                    </form>
-                    <div class="modal-action">
-                        <!-- if there is a button in form, it will close the modal -->
-                        <form method="dialog" class="modal-box">
-                            <button class="btn">Close</button>
-                        </form>
-                    </div>
-                </dialog>
 
             </div>
             <div class="mt-5 whitespace-pre-wrap italic">&ldquo;{{ $post->title }}&rdquo;</div>
@@ -121,4 +104,70 @@
     @else
         <p>Post Not Found.</p>
     @endif
+@endsection
+@section('endOfBody')
+    <!-- Modal -->
+    <style>
+        body:has(input[form="modal-form-my-modal"]:checked) #modal-container-my-modal {
+            display: block;
+        }
+    </style>
+    <input type="checkbox" id="modal-toggle" role="button" form="modal-form-my-modal"
+        class="absolute h-1 w-1 overflow-hidden opacity-0" {{ count($errors) === 0 ? '' : 'checked' }} />
+    <div id="modal-container-my-modal" class="fixed bottom-0 left-0 right-0 top-0 z-50 hidden h-screen w-screen">
+        <label class="fixed bottom-0 left-0 right-0 top-0 block h-screen w-screen bg-black opacity-60" tabindex="-1"
+            for="modal-toggle"></label>
+
+        <div class="fixed left-1/2 top-1/2 w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6"
+            role="dialog">
+            <div class="flex flex-row items-center">
+                <span class="grow">Edit Post</span>
+                <label class="p-1" for="modal-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+
+                </label>
+            </div>
+
+            @if (count($errors) !== 0)
+                <div class="relative rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    @foreach ($errors as $error)
+                        <span class="block sm:inline">{{ $error }}</span>
+                    @endforeach
+                </div>
+            @endif
+
+            <form method="post" action="{{ url('edit_post_action') }}">
+                @csrf
+                <input type="hidden" name="id" value="{{ $post->id }}">
+                <input type="hidden" name="author" value="{{ $post->id }}">
+                <div class="m-auto mt-4 flex max-w-screen-md flex-col items-center justify-between gap-2">
+                    <div
+                        class="flex h-11 w-full items-center justify-between overflow-hidden rounded-full border bg-gray-50 px-4">
+                        <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Title"
+                            name="title" value="{{ old('title') ?? $post->title }}">
+                    </div>
+                    <div
+                        class="flex h-44 w-full items-center justify-between overflow-hidden rounded-3xl border bg-gray-50 p-4">
+                        <textarea class="h-full w-full bg-gray-50 outline-none" placeholder="What's your news?" name="message">{{ old('message') ?? $post->message }}</textarea>
+                    </div>
+                    <button type="submit"
+                        class="flex items-center gap-1 rounded-full bg-gray-300 px-4 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:bg-gray-400 focus:bg-gray-500 active:bg-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="h-6 w-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        </svg>
+                        Post
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <form id="modal-form-my-modal"></form>
+    <!-- Modal -->
 @endsection

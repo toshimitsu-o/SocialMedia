@@ -89,7 +89,7 @@ Route::post('add_post_action', function() {
     $title = request('title');
     $message = request('message');
 
-    $errors = validate_post($title, $author, $message);
+    $errors = validate_post($title, $message, $author);
     if ($errors) {
         return back()->with('errors',$errors)->withInput();
     }
@@ -108,9 +108,15 @@ Route::post('add_post_action', function() {
  * Edit Post: process a post update request
  */
 Route::post('edit_post_action', function() {
+    $author = request('author');
     $title = request('title');
     $message = request('message');
     $id = request('id');
+
+    $errors = validate_post($title, $message, "", true);
+    if ($errors) {
+        return back()->with('errors',$errors)->withInput();
+    }
 
     edit_post($id, $title, $message);
     return redirect(url("post/$id"));
@@ -175,13 +181,13 @@ Route::post('like_action', function() {
  * 
  * @return array Array of error messages
  */
-function validate_post($title, $author, $message) {
+function validate_post($title, $message, $author = null, $isEdit = false) {
     $errors = array();
 
     if (strlen($title) < 3) {
         $errors[] = "Title must have at least 3 characters.";
     }
-    if (strlen($author) < 1) {
+    if (!$isEdit && strlen($author) < 1) {
         $errors[] = "Author must not be empty.";
     }
     if (preg_match('~[0-9]+~', $author)) {
