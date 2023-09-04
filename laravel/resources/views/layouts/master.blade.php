@@ -88,16 +88,22 @@
                 background-position: 0% 50%;
             }
         }
+
+        details > summary::-webkit-details-marker {
+    display: none;
+}
     </style>
 </head>
 
 <body class="bg slider-thumb">
-    <div class="backdrop-blur-md">
+    <div class="flex h-full min-h-screen flex-col backdrop-blur-md">
         @include('layouts.nav')
-        <main class="m-auto min-h-screen max-w-screen-md">
+
+        <main class="m-auto w-full max-w-screen-md grow">
             @yield('content')
         </main>
         @include('layouts.footer')
+
     </div>
     @yield('endOfBody')
 </body>

@@ -2,7 +2,7 @@
     <details
         class="group m-auto flex w-fit flex-row items-end rounded-full bg-gray-100 bg-opacity-70 p-2 duration-300 open:w-full open:rounded-3xl open:bg-gray-100 drop-shadow-xl" {{count($errors) === 0 ? '' : 'open'}}>
         <summary class="flex cursor-pointer list-none flex-row bg-inherit p-1">
-            <div class="h-0 w-0 grow overflow-hidden duration-300 ease-in-out group-open:h-full group-open:w-96"></div>
+            <div class="h-0 w-0 grow overflow-hidden duration-300 group-open:h-full group-open:w-96"></div>
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -19,7 +19,7 @@
                     @endforeach
                 </div>
             @endif
-            <form method="post" action="{{ url('add_post_action') }}">
+                        <form method="post" action="{{ url('add_post_action') }}">
                 @csrf
                 <div class="m-auto mt-4 flex max-w-screen-md flex-col items-center justify-between gap-2">
                     <div
