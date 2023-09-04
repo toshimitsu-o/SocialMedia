@@ -36,7 +36,7 @@
                     </label>
 
                     <div for="toolmenu" id="toolmenumenu"
-                        class="absolute right-1 top-full z-10 mt-1 min-w-max rounded-lg opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition ease-in-out">
+                        class="absolute right-1 top-full mt-1 min-w-max rounded-lg bg-white opacity-0 shadow-lg ring-1 ring-black ring-opacity-5 transition ease-in-out">
                         <ul class="block p-2 text-right text-gray-900">
                             <li><a href="#" class="flex items-start rounded-lg p-3 hover:bg-gray-50"
                                     onclick="my_modal_1.showModal()">Edit</a></li>

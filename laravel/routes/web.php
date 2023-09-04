@@ -91,7 +91,7 @@ Route::post('add_post_action', function() {
 
     $errors = validate_post($title, $author, $message);
     if ($errors) {
-        return back()->with('errors', $errors);
+        return back()->with('errors',$errors)->withInput();
     }
 
     $uid = handle_user($author);
@@ -167,7 +167,7 @@ Route::post('like_action', function() {
 */
 
 /**
- * Validate user input for adding a post.
+ * Validate user input for a post.
  * 
  * @param string $title Post title
  * @param string $author Post author name

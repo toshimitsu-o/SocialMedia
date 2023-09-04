@@ -1,6 +1,6 @@
 <div>
     <details
-        class="group m-auto flex w-fit flex-row items-end rounded-full bg-gray-100 bg-opacity-70 p-2 duration-300 open:w-full open:rounded-3xl open:bg-gray-100 drop-shadow-xl">
+        class="group m-auto flex w-fit flex-row items-end rounded-full bg-gray-100 bg-opacity-70 p-2 duration-300 open:w-full open:rounded-3xl open:bg-gray-100 drop-shadow-xl" {{count($errors) === 0 ? '' : 'open'}}>
         <summary class="flex cursor-pointer list-none flex-row bg-inherit p-1">
             <div class="h-0 w-0 grow overflow-hidden duration-300 ease-in-out group-open:h-full group-open:w-96"></div>
 
@@ -19,22 +19,25 @@
                     @endforeach
                 </div>
             @endif
+            @if (!empty($title))
+                <p>{{$title}}</p>
+            @endif
             <form method="post" action="{{ url('add_post_action') }}">
                 @csrf
                 <div class="m-auto mt-4 flex max-w-screen-md flex-col items-center justify-between gap-2">
                     <div
                         class="flex h-11 w-full items-center justify-between overflow-hidden rounded-full border bg-gray-50 px-4">
                         <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Your name"
-                            name="author" value="{{ $uname }}">
+                            name="author" value="{{ $uname ?? old('author') }}">
                     </div>
                     <div
                         class="flex h-11 w-full items-center justify-between overflow-hidden rounded-full border bg-gray-50 px-4">
                         <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Title"
-                            name="title">
+                            name="title" value="{{ old('title') }}">
                     </div>
                     <div
                         class="flex h-24 w-full items-center justify-between overflow-hidden rounded-3xl border bg-gray-50 p-4">
-                        <textarea class="h-full w-full bg-gray-50 outline-none" placeholder="What's your news?" name="message"></textarea>
+                        <textarea class="h-full w-full bg-gray-50 outline-none" placeholder="What's your news?" name="message">{{ old('message') }}</textarea>
                     </div>
                     <button type="submit"
                         class="flex items-center gap-1 rounded-full bg-gray-300 px-4 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:bg-gray-400 focus:bg-gray-500 active:bg-gray-500">
