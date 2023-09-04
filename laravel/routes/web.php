@@ -139,6 +139,11 @@ Route::post('add_comment_action', function() {
     $message = request('message');
     $replyTo = request('replyTo');
 
+    $errors = validate_comment($message, $author);
+    if ($errors) {
+        return back();
+    }
+
     $uid = handle_user($author);
     $id = add_comment($postId, $uid, $message, $replyTo);
 
@@ -447,6 +452,22 @@ function add_comment($postId, $author, $message, $replyTo) {
     DB::insert($sql, [$postId, $author, $message, $date, $replyTo]);
     $id = DB::getPdo()->lastInsertId();
     return $id;
+}
+
+function validate_comment($message, $author) {
+    $errors = array();
+
+    if (strlen($author) < 1) {
+        $errors[] = "Author must not be empty.";
+    }
+    if (preg_match('~[0-9]+~', $author)) {
+        $errors[] = "Author must not have numeric characters.";
+    }
+    if (strlen($message) < 1) {
+        $errors[] = "Message must not be empty.";
+    }
+
+    return $errors;
 }
 
 /* Like */
