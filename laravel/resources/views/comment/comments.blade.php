@@ -1,12 +1,9 @@
 <div>
     @forelse($comments as $comment)
-        <div class="flex flex-row">
-            <div>{{ $comment->author }}: {{ $comment->message }} {{ $comment->date }}</div>
-            <div>
-                @include('comment.add_reply', ['postId' => $comment->postId, 'replyTo' => $comment->id])
-            </div>
-        </div>
-        @include('comment.list_reply', ['replies' => $comment->replies])
+    <div class="my-2">
+        @include('comment.comment', ['comment' => $comment])
+        @include('comment.list_reply', ['replies' => $comment->replies, 'replyingto' => $comment->author])
+    </div>
     @empty
         <p>No comments.</p>
     @endforelse
