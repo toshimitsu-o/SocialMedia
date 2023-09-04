@@ -118,17 +118,17 @@
         <label class="fixed bottom-0 left-0 right-0 top-0 block h-screen w-screen bg-black opacity-60" tabindex="-1"
             for="modal-toggle"></label>
 
-        <div class="fixed left-1/2 top-1/2 w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6"
+        <div class="fixed left-1/2 top-1/2 w-full max-w-screen-md -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white p-6 pt-3"
             role="dialog">
             <div class="flex flex-row items-center">
-                <span class="grow">Edit Post</span>
-                <label class="p-1" for="modal-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-
+                <div class="grow"></div>
+                <label for="modal-toggle">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          
+                    </div>
                 </label>
             </div>
 
@@ -162,7 +162,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                         </svg>
-                        Post
+                        Update
                     </button>
                 </div>
             </form>
