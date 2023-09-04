@@ -59,11 +59,11 @@
                 <!-- tool menu -->
 
             </div>
-            <div class="mt-5 whitespace-pre-wrap italic">&ldquo;{{ $post->title }}&rdquo;</div>
+            <div class="mt-5 whitespace-pre-wrap text-lg italic">&ldquo;{{ $post->title }}&rdquo;</div>
             <div class="mt-5 whitespace-pre-wrap">{{ $post->message }}</div>
             <div class="mt-5 flex flex-wrap justify-center gap-2 border-b pb-4">
             </div>
-            <div class="flex h-16 items-center justify-around border-b">
+            <div class="flex h-16 items-center justify-around border-b text-gray-600">
                 <div class="flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="h-6 w-6">
@@ -124,10 +124,11 @@
                 <div class="grow"></div>
                 <label for="modal-toggle">
                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="h-6 w-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                          
+                        </svg>
+
                     </div>
                 </label>
             </div>

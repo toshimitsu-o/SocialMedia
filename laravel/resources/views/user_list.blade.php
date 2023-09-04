@@ -13,10 +13,8 @@
                     <div class="flex items-center gap-3.5">
 
                         @include('user.user_icon', ['userId' => $user->id])
-                        <div class="flex flex-col">
-                            <b class="mb-2 capitalize">{{ $user->name }}</b>
-                        </div>
-                        <p>({{ $user->postCount }} posts)</p>
+                            <span class="font-semibold">{{ $user->name }}</span>
+                        <span>({{ $user->postCount }} posts)</span>
                     </div>
                 </div>
             </a>

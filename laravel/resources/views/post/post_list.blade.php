@@ -1,20 +1,20 @@
 @if (count($posts) > 0)
-    <p>{{ count($posts) }} posts</p>
+    
     @forelse($posts as $post)
         <a href="{{ url("post/$post->id") }}">
-            <div class="my-5 w-full rounded-2xl border bg-white bg-opacity-70 p-5">
+            <div class="my-6 w-full rounded-2xl border bg-white bg-opacity-70 p-5">
                 <div class="flex items-center gap-3.5">
 
                     @include('user.user_icon', ['userId' => $post->authorId])
                     <div class="flex flex-col">
-                        <b class="mb-2 capitalize">{{ $post->author }}</b>
+                        <b class="mb-2">{{ $post->author }}</b>
                         <time datetime="06-08-21" class="text-xs text-gray-400">{{ $post->date }}
                         </time>
                     </div>
                 </div>
-                <div class="mt-5 whitespace-pre-wrap">{{ $post->title }}</div>
+                <div class="my-5 whitespace-pre-wrap text-lg">{{ $post->title }}</div>
 
-                <div class="flex items-center justify-around">
+                <div class="flex items-center justify-around text-gray-500">
                     <!-- Comments -->
                     <div class="flex items-center gap-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -39,6 +39,7 @@
             </div>
         </a>
     @endforeach
+    <p>{{ count($posts) }} posts</p>
 @else
     <p>No items.</p>
 @endif

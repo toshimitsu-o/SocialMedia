@@ -2,7 +2,7 @@
     @csrf
     <input type="hidden" name="postId" value="{{ $postId }}">
     <input type="hidden" name="replyTo" value="{{ $replyTo }}">
-    <div class="mt-4 flex items-center justify-between">
+    <div class="mt-4 flex items-center justify-between gap-2">
         <div class="flex h-11 items-center justify-between overflow-hidden rounded-full border bg-gray-50 px-4">
             <input type="text" class="h-full w-full bg-gray-50 outline-none" placeholder="Your name" name="author"
                 value={{ $uname }}>
