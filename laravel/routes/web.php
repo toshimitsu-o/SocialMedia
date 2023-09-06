@@ -454,6 +454,14 @@ function add_comment($postId, $author, $message, $replyTo) {
     return $id;
 }
 
+/**
+ * Validate user input comment.
+ * 
+ * @param string $message Comment message
+ * @param string $author Username
+ * 
+ * @return array Array of error messages
+ */
 function validate_comment($message, $author) {
     $errors = array();
 
