@@ -99,7 +99,7 @@
     <div class="flex h-full min-h-screen flex-col backdrop-blur-md">
         @include('layouts.nav')
 
-        <main class="m-auto w-full max-w-screen-md grow">
+        <main class="m-auto w-full max-w-screen-md grow text-gray-700">
             @yield('content')
         </main>
         @include('layouts.footer')

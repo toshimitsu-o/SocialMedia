@@ -2,7 +2,7 @@
     
     @forelse($posts as $post)
         <a href="{{ url("post/$post->id") }}">
-            <div class="my-6 w-full rounded-2xl border bg-white bg-opacity-70 p-5">
+            <div class="my-6 w-full rounded-2xl bg-white bg-opacity-70 p-5">
                 <div class="flex items-center gap-3.5">
 
                     @include('user.user_icon', ['userId' => $post->authorId])

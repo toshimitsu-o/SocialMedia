@@ -177,6 +177,8 @@ Route::post('like_action', function() {
 |--------------------------------------------------------------------------
 */
 
+function local_date($time) {}
+
 /**
  * Validate user input for a post.
  * 
@@ -293,7 +295,7 @@ function add_user($name) {
  */
 function get_posts() {
     $sql = "
-    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, datetime(Post.date, 'localtime') as date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -312,7 +314,7 @@ function get_posts() {
  */
 function get_posts_by_user($id) {
     $sql = "
-    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, datetime(Post.date, 'localtime') as date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -332,7 +334,7 @@ function get_posts_by_user($id) {
  */
 function get_post($id) {
     $sql = "
-    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, Post.date,
+    select Post.id, Post.title, Post.author as authorId, User.name as author, Post.message, datetime(Post.date, 'localtime') as date,
     (select count(*) from Comment where Comment.postId = Post.id) as commentsCount,
     (select count(*) from Like where Like.postId = Post.id) as likesCount
     from Post
@@ -400,7 +402,7 @@ function delete_post($id) {
  */
 function get_comments($id) {
     $sql = "
-    select Comment.id, Comment.postId, Comment.author as authorId, User.name as author, Comment.message, Comment.date, Comment.replyTo
+    select Comment.id, Comment.postId, Comment.author as authorId, User.name as author, Comment.message, datetime(Comment.date, 'localtime') as date, Comment.replyTo
     from Comment, User
     where postId = ? and Comment.author = User.id
     order by Comment.date";

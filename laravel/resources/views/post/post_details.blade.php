@@ -6,7 +6,7 @@
 
 @section('content')
     @if ($post)
-        <div class="m-auto mt-6 max-w-screen-md rounded-2xl border bg-white bg-opacity-70 p-4">
+        <div class="m-auto mt-6 max-w-screen-md rounded-2xl bg-white bg-opacity-70 p-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3.5">
                     @include('user.user_icon', ['userId' => $post->authorId])
