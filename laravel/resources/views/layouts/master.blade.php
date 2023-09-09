@@ -5,13 +5,17 @@
     <meta charset="utf-8">
     <title>Social Media | @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- below is for Elf env to get tailwind from CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
-    @vite('resources/css/app.css')
+    {{-- below is for other env using vite --}}
+    {{-- @vite('resources/css/app.css') --}}
+    {{-- below is for when JS is disabled. ver. 2 does not support some new tailwind classes  --}}
+    <noscript>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    </noscript>
     <style>
         body {
             height: 100vh;
-            background: linear-gradient(90deg, #e52e71, #ff8a00);
-
         }
 
         .slider-thumb::before {
@@ -89,9 +93,9 @@
             }
         }
 
-        details > summary::-webkit-details-marker {
-    display: none;
-}
+        details>summary::-webkit-details-marker {
+            display: none;
+        }
     </style>
 </head>
 
