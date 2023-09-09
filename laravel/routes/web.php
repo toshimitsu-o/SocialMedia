@@ -177,8 +177,6 @@ Route::post('like_action', function() {
 |--------------------------------------------------------------------------
 */
 
-function local_date($time) {}
-
 /**
  * Validate user input for a post.
  * 

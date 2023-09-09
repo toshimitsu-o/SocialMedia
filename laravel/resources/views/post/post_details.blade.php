@@ -11,7 +11,7 @@
                 <div class="flex items-center gap-3.5">
                     @include('user.user_icon', ['userId' => $post->authorId])
                     <div class="flex flex-col">
-                        <b class="mb-2 capitalize">{{ $post->author }}</b>
+                        <b class="mb-2">{{ $post->author }}</b>
                         <time datetime="06-08-21" class="text-xs text-gray-400">{{ $post->date }}
                         </time>
                     </div>
