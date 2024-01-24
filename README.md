@@ -7,9 +7,11 @@ This web application was originally developed for a university assignment, aimin
 
 ## Tech Stack
 
-- Laravel: A PHP web application framework that provides an elegant syntax and tools for tasks such as routing, middleware, and database interactions.
-- PHP: The server-side scripting language used to build dynamic web pages and applications.
-- SQLite: A lightweight, serverless database engine used for the storage of data in this project.
+- Laravel framework with Blade templates
+- PHP
+- SQLite database
+- Tailwind CSS framework
+- Git
 
 ## Key Features
 
