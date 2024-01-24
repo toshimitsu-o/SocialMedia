@@ -39,10 +39,10 @@ This web application was originally developed for a university assignment, aimin
 - Displays a list of unique users who have posts.
 - Provides links to a page that lists the posts of each user.
 ### Profile Page
-- An additional page showcasing the current username and ID.
+- An additional page displaying the current username and ID.
 - Includes a logout link to delete sessions for testing purposes.
 ### No JavaScript
 - As a part of requirements, the app works without JavaScript including form validations (client and server) and modal UI elements.
 
-## Reflection
+## Project Reflection
 The development followed the Agile methodology to iterate a cycle of developing components by testing to achieve a working product with improvements at every stage. The development was initiated by developing basic features prior to advanced features. As a new industry standard to achieve professional quality, Tailwind was used for CSS styling. For version control, Git was used. Changes were committed frequently for risks such as programming failures and data loss. The blade templates were organised by category and inheritance was used to improve the manageability and readability of the code. Everything went smoothly by following the course materials; however, the layered comments component was challenging. To achieve the layered comments, the app converts comment data to a nested array structure and the blade view utilises the data inheritance feature of the @include method that I found in Laravel documentation. The view includes two templates that are nested within each other to loop through replies until they exhaust. UI of this component reflects the structure of comments. Collapsible reply input is attached to each comment to deliver intuitive user experience. Achieving advanced UI such as modal, accordion, and tooltip without JavaScript was another challenge that I faced. It involved research, experimentation, and testing. I learned new CSS features and some limitations of CSS along the way. I have developed the app with all the requirements along with some extra features on time. Nonetheless, I want to improve my planning to include precise dates for each stage for better project management in the next assignment.
