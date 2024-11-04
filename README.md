@@ -4,6 +4,9 @@ This web application was originally developed for a university assignment, aimin
 
 Developed: August 2023
 
+## Demonstration Video
+[![Social Media Demonstration](https://img.youtube.com/vi/2SNP_5yBAoQ/0.jpg)](https://youtu.be/2SNP_5yBAoQ)
+
 ## Screenshots
 <img width="1073" alt="home" src="https://github.com/user-attachments/assets/c6ea048b-cdd9-4b41-8ebd-ed5da8a03ab2">
 <img width="1073" alt="post" src="https://github.com/user-attachments/assets/14613eec-6208-41b5-8c5b-89bbce4e4190">
