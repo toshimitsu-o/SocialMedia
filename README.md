@@ -2,6 +2,14 @@
 
 This web application was originally developed for a university assignment, aiming to create the foundation for a social media platform. The project successfully implements key features required for the assignment using Laravel, PHP, and SQLite.
 
+Developed: August 2023
+
+## Screenshots
+<img width="1073" alt="home" src="https://github.com/user-attachments/assets/c6ea048b-cdd9-4b41-8ebd-ed5da8a03ab2">
+<img width="1073" alt="post" src="https://github.com/user-attachments/assets/14613eec-6208-41b5-8c5b-89bbce4e4190">
+<img width="1073" alt="comments" src="https://github.com/user-attachments/assets/ec7b39a2-908f-4f74-b40b-0f1c4c12169b">
+<img width="1073" alt="addPost" src="https://github.com/user-attachments/assets/ccf31bfa-175c-433c-aadb-b980169c079d">
+
 ## ER Diagram of SQLite Database
 ![ERdiagram](https://github.com/toshimitsu-o/SocialMedia/assets/89127228/440e37ad-b052-4080-bc35-6fa2f44a4fce)
 
